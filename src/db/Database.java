@@ -1,3 +1,6 @@
+package db;
+
+import account.BankAccount;
 import exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
@@ -24,18 +27,18 @@ public class Database {
         accounts.add(new BankAccount(id, name, surname, balance));
     }
 
-    public String getUserById(int id) throws UserNotFoundException {
+    public BankAccount getUserById(int id) throws UserNotFoundException {
         try {
-            return accounts.get(id).toString();
+            return accounts.get(id);
         }catch (Exception e){
             throw new UserNotFoundException();
         }
     }
 
-    public String getUserByName(String name, String surname) throws UserNotFoundException {
+    public BankAccount getUserByName(String name, String surname) throws UserNotFoundException {
         for(BankAccount account : accounts){
             if(account.getOwnerName().equals(name) && account.getOwnerSurname().equals(surname)){
-                return account.toString();
+                return account;
             }
         }
         throw new UserNotFoundException();
@@ -43,7 +46,7 @@ public class Database {
 
     public String getDatabase(){
         if(accounts.isEmpty()){
-            return "Database is empty";
+            return "db.Database is empty";
         }
         String result = "";
         for(BankAccount account : accounts){

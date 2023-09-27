@@ -12,6 +12,11 @@
 //        • формирование сводной информации по всем счетам
 
 
+import db.Database;
+import operations.GetOperation;
+import operations.PutOperation;
+import operations.TransferOperation;
+
 import java.util.Scanner;
 
 public class Main {
@@ -31,7 +36,9 @@ public class Main {
                             "--get_db - to print database \n" +
                             "--get_user_id - to get user by id \n" +
                             "--get_user_name - to get user by name \n" +
-                            "--update - to update database");
+                            "--add_money - to add money \n" +
+                            "--get_money - to get money from account \n" +
+                            "--transfer - to transfer money from first account to second");
                     break;
                 case "--end":
                     return;
@@ -82,6 +89,39 @@ public class Main {
                     try {
                         String[] data = scanner.nextLine().split(" ");
                         System.out.println(db.getUserByName(data[0], data[1]));
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case "--add_money":
+                    System.out.println("Please enter data in format 'name surname sum'");
+                    try {
+                        String[] data = scanner.nextLine().split(" ");
+                        PutOperation operation = new PutOperation(Integer.parseInt(data[2]), data[0], data[1]);
+                        operation.doOperation();
+                        System.out.println("Operation completed");
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case "--get_money":
+                    System.out.println("Please enter data in format 'name surname sum'");
+                    try {
+                        String[] data = scanner.nextLine().split(" ");
+                        GetOperation operation = new GetOperation(Integer.parseInt(data[2]), data[0], data[1]);
+                        operation.doOperation();
+                        System.out.println("Operation completed");
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case "--transfer":
+                    System.out.println("Please enter data in format 'name1 surname1 name2 surname2 sum'");
+                    try {
+                        String[] data = scanner.nextLine().split(" ");
+                        TransferOperation operation = new TransferOperation(Integer.parseInt(data[4]), data[0], data[1], data[2], data[3]);
+                        operation.doOperation();
+                        System.out.println("Operation completed");
                     }catch (Exception e){
                         System.out.println(e.getMessage());
                     }

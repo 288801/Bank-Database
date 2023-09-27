@@ -1,3 +1,7 @@
+package account;
+
+import operations.Operation;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +57,7 @@ public class BankAccount {
         return operationHistory;
     }
 
-    public void setOperationHistory(List<Operation> operationHistory) {
-        this.operationHistory = operationHistory;
+    public void addOperation(Operation operation) {
+        this.operationHistory.add(operation);
     }
 }
