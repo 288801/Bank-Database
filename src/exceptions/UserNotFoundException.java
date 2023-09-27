@@ -1,4 +1,7 @@
 package exceptions;
 
-public class UserNotFoudExceprion {
+public class UserNotFoundException extends Exception{
+    public UserNotFoundException() {
+        super("User not found");
+    }
 }
