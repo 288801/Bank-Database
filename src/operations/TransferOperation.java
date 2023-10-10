@@ -34,7 +34,7 @@ public class TransferOperation extends Operation{
  
     @Override
     public String toString() {
-        return formatter.format(date) + " transfer money from " + account.getOwnerName() + " " +
+        return formatter.format(date) + " transfer " + sum + " from " + account.getOwnerName() + " " +
                 account.getOwnerSurname() + " to " +
                 destination.getOwnerName() + " " +
                 destination.getOwnerSurname();
