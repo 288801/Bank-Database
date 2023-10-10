@@ -1,20 +1,15 @@
 package operations;
  
+import exceptions.BankAccountNotFoundException;
 import exceptions.DontHaveEnoughMoneyException;
 import exceptions.UserNotFoundException;
  
 // Снятие суммы со счета
 public class GetOperation extends Operation{
-    private int sum;
- 
-    public GetOperation(int sum, int id) throws UserNotFoundException {
+
+    public GetOperation(int sum, int id) throws BankAccountNotFoundException {
         this.sum = sum;
-        account = db.getUserById(id);
-    }
- 
-    public GetOperation(int sum, String name, String surname) throws UserNotFoundException {
-        this.sum = sum;
-        account = db.getUserByName(name, surname);
+        account = db.getAccountById(id);
     }
  
     @Override

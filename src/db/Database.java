@@ -1,7 +1,8 @@
 package db;
 
-import account.BankAccount;
+import models.BankAccount;
 import exceptions.UserNotFoundException;
+import models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 public class Database {
 
     private List<BankAccount> accounts;
+    private List<User> users;
     private static Database instance;
 
     public static Database getInstance() {
@@ -22,58 +24,15 @@ public class Database {
         accounts = new ArrayList<>();
     }
 
-    public void addUser(String name, String surname, int balance){
-        int id = accounts.size();
-        accounts.add(new BankAccount(id, name, surname, balance));
+    public List<BankAccount> getAccounts() {
+        return accounts;
     }
 
-    public BankAccount getUserById(int id) throws UserNotFoundException {
-        try {
-            return accounts.get(id);
-        }catch (Exception e){
-            throw new UserNotFoundException();
-        }
+    public List<User> getUsers() {
+        return users;
     }
 
-    public BankAccount getUserByName(String name, String surname) throws UserNotFoundException {
-        for(BankAccount account : accounts){
-            if(account.getOwnerName().equals(name) && account.getOwnerSurname().equals(surname)){
-                return account;
-            }
-        }
-        throw new UserNotFoundException();
-    }
+    public void addAccount(BankAccount account){accounts.add(account);}
 
-    public String getDatabase(){
-        if(accounts.isEmpty()){
-            return "db.Database is empty";
-        }
-        String result = "";
-        for(BankAccount account : accounts){
-            result += account.toString() + "\n";
-        }
-        return result;
-    }
-
-    public void removeById(int id) throws UserNotFoundException {
-        try{
-            accounts.remove(id);
-        }catch (Exception e){
-            throw new UserNotFoundException();
-        }
-    }
-
-    public void removeByName(String name, String surname) throws UserNotFoundException {
-        BankAccount user = null;
-        for(BankAccount account : accounts){
-            if(account.getOwnerName().equals(name) && account.getOwnerSurname().equals(surname)){
-                user = account;
-            }
-        }
-        try{
-            accounts.remove(user);
-        }catch (Exception e){
-            throw new UserNotFoundException();
-        }
-    }
+    public void addUser(User user){users.add(user);}
 }

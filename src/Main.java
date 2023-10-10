@@ -12,28 +12,12 @@
 //        • формирование сводной информации по всем счетам
 
 
-import db.Database;
-import operations.GetOperation;
-import operations.PutOperation;
-import operations.TransferOperation;
-import service.MainService;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        MainService service = new MainService();
-
-        System.out.println("Please enter the command. To view a list of possible commands, enter '--help'");
-        while(true){
-            String command = scanner.nextLine();
-            String response = service.processRequest(command);
-            if(response == null){
-                break;
-            }else{
-                System.out.println(response);
-            }
-        }
+        App app = new App();
+        app.run();
     }
 }

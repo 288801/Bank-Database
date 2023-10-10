@@ -1,4 +1,4 @@
-package account;
+package models;
 
 import operations.Operation;
 
@@ -7,43 +7,31 @@ import java.util.List;
 
 public class BankAccount {
     private int accountId;
-    private String ownerName;
-    private String ownerSurname;
+    private User owner;
     private int balance;
     private List<Operation> operationHistory = new ArrayList<>();
 
-    public BankAccount(int accountId, String ownerName, String ownerSurname, int balance) {
+    public BankAccount(int accountId, User user, int balance) {
         this.accountId = accountId;
-        this.ownerName = ownerName;
-        this.ownerSurname = ownerSurname;
+        this.owner = user;
         this.balance = balance;
     }
 
     @Override
     public String toString() {
         return "BankAccount_" + accountId + "{" +
-                "ownerName='" + ownerName +
-                "', ownerSurname='" + ownerSurname +
+                "ownerName='" + owner.getName() +
+                "', ownerSurname='" + owner.getSurname() +
                 "', balance=" + balance +
                 ", operationHistory=" + operationHistory +
                 '}';
     }
 
-    public String getOwnerName() {
-        return ownerName;
-    }
+    public String getOwnerName() {return owner.getName();}
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
+    public String getOwnerSurname() {return owner.getSurname();}
 
-    public String getOwnerSurname() {
-        return ownerSurname;
-    }
-
-    public void setOwnerSurname(String ownerSurname) {
-        this.ownerSurname = ownerSurname;
-    }
+    public String getOwnerEmail(){return owner.getEmail();}
 
     public int getBalance() {
         return balance;

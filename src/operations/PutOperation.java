@@ -1,20 +1,15 @@
 package operations;
  
 import db.Database;
+import exceptions.BankAccountNotFoundException;
 import exceptions.UserNotFoundException;
  
 // Добавление суммы на счет
 public class PutOperation extends Operation{
-    private int sum;
- 
-    public PutOperation(int sum, int id) throws UserNotFoundException {
+
+    public PutOperation(int sum, int id) throws BankAccountNotFoundException {
         this.sum = sum;
-        account = db.getUserById(id);
-    }
- 
-    public PutOperation(int sum, String name, String surname) throws UserNotFoundException {
-        this.sum = sum;
-        account = db.getUserByName(name, surname);
+        account = db.getAccountById(id);
     }
  
     @Override
