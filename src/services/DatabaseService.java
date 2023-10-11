@@ -75,6 +75,14 @@ public class DatabaseService {
         return result;
     }
 
+    public String getAccountInfo(String email, int id) throws BankAccountNotFoundException {
+        try {
+            return db.getAccounts().get(id).toString();
+        }catch (Exception e){
+            throw new BankAccountNotFoundException();
+        }
+    }
+
     public String getDatabase(){
         if(db.getAccounts().isEmpty() && db.getUsers().isEmpty()){
             return "Database is empty";

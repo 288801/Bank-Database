@@ -18,6 +18,7 @@ public class UserService implements RoleService{
     public boolean checkRole(String email, String password) throws UserNotFoundException {
         User user = db.getUserByEmail(email);
         if(user.checkPassword(password) && user.getRole() == Role.USER){
+            user = db.getUserByEmail(email);
             return true;
         }
         return false;
@@ -31,7 +32,7 @@ public class UserService implements RoleService{
         switch (command) {
             case "--help":
                 return ("'--add balance' - to add new bank account \n" +
-                        "'--remove_ id' - to remove bank account by id \n" +
+                        "'--remove id' - to remove bank account by id \n" +
                         "'--get_info id' - to get information about your account with id=id \n" +
                         "'--get_all_info' - to get information about your bank accounts \n" +
                         "'--add_money sum id' - to add money in bank account \n" +
@@ -39,31 +40,35 @@ public class UserService implements RoleService{
                         "'--transfer sum id1 id2' - to transfer money from first account to second");
             case "--add":
                 try {
-                    db.createAccount(params[0]);
+                    db.createAccount(user.getEmail(), Integer.parseInt(params[0]));
                     return ("Operation completed");
                 } catch (Exception e) {
                     return ("The entered data is incorrect, please use the format 'name surname balance'");
                 }
-            case "--remove_id":
+            case "--remove":
                 try {
                     int id = Integer.parseInt(params[0]);
-                    db.removeById(id);
+                    db.removeAccountById(id);
                     return ("Operation completed");
                 } catch (Exception e) {
                     return (e.getMessage());
                 }
             case "--get_info":
                 try {
-                    db.removeByName(params[0], params[1]);
+                    db.getAccountInfo(user.getEmail(), Integer.parseInt(params[0]));
                     return ("Operation completed");
                 } catch (Exception e) {
                     return (e.getMessage());
                 }
             case "--get_all_info":
-                return request;
+                try {
+                    System.out.println(db.getUserAccountsInfo(user.getEmail()));
+                } catch (Exception e) {
+                    return (e.getMessage());
+                }
             case "--add_money":
                 try {
-                    PutOperation operation = new PutOperation(Integer.parseInt(params[2]), params[0], params[1]);
+                    PutOperation operation = new PutOperation(Integer.parseInt(params[0]), Integer.parseInt(params[1]));
                     operation.doOperation();
                     return ("Operation completed");
                 } catch (Exception e) {
@@ -71,7 +76,7 @@ public class UserService implements RoleService{
                 }
             case "--get_money":
                 try {
-                    GetOperation operation = new GetOperation(Integer.parseInt(params[2]), params[0], params[1]);
+                    GetOperation operation = new GetOperation(Integer.parseInt(params[0]), Integer.parseInt(params[1]));
                     operation.doOperation();
                     return ("Operation completed");
                 } catch (Exception e) {
@@ -79,7 +84,7 @@ public class UserService implements RoleService{
                 }
             case "--transfer":
                 try {
-                    TransferOperation operation = new TransferOperation(Integer.parseInt(params[4]), params[0], params[1], params[2], params[3]);
+                    TransferOperation operation = new TransferOperation(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]));
                     operation.doOperation();
                     return ("Operation completed");
                 } catch (Exception e) {
@@ -87,5 +92,6 @@ public class UserService implements RoleService{
                 }
             default:
                 return ("Input command is incorrect. To view a list of possible commands, enter '--help'");
+        }
     }
 }
