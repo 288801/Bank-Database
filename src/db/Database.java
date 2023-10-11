@@ -22,6 +22,7 @@ public class Database {
 
     private Database() {
         accounts = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     public List<BankAccount> getAccounts() {

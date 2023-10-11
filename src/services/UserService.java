@@ -12,20 +12,18 @@ import java.util.Arrays;
 public class UserService implements RoleService{
 
     private DatabaseService db = new DatabaseService();
-    private User user;
 
     @Override
     public boolean checkRole(String email, String password) throws UserNotFoundException {
         User user = db.getUserByEmail(email);
         if(user.checkPassword(password) && user.getRole() == Role.USER){
-            user = db.getUserByEmail(email);
             return true;
         }
         return false;
     }
 
     @Override
-    public String processRequest(String request) {
+    public String processRequest(String email, String request) {
         String[] req = request.split(" ");
         String command = req[0];
         String[] params = Arrays.copyOfRange(req, 1, req.length);
@@ -40,10 +38,10 @@ public class UserService implements RoleService{
                         "'--transfer sum id1 id2' - to transfer money from first account to second");
             case "--add":
                 try {
-                    db.createAccount(user.getEmail(), Integer.parseInt(params[0]));
+                    db.createAccount(email, Integer.parseInt(params[0]));
                     return ("Operation completed");
                 } catch (Exception e) {
-                    return ("The entered data is incorrect, please use the format 'name surname balance'");
+                    return ("The entered data is incorrect, please use the format '--add balance'");
                 }
             case "--remove":
                 try {
@@ -55,14 +53,13 @@ public class UserService implements RoleService{
                 }
             case "--get_info":
                 try {
-                    db.getAccountInfo(user.getEmail(), Integer.parseInt(params[0]));
-                    return ("Operation completed");
+                    return db.getAccountInfo(email, Integer.parseInt(params[0]));
                 } catch (Exception e) {
                     return (e.getMessage());
                 }
             case "--get_all_info":
                 try {
-                    System.out.println(db.getUserAccountsInfo(user.getEmail()));
+                    return db.getUserAccountsInfo(email);
                 } catch (Exception e) {
                     return (e.getMessage());
                 }

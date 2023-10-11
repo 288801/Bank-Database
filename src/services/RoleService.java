@@ -6,5 +6,5 @@ public interface RoleService {
 
     public boolean checkRole(String email, String password) throws UserNotFoundException;
 
-    public String processRequest(String request);
+    public String processRequest(String email, String request);
 }

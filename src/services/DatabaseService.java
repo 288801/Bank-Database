@@ -77,7 +77,11 @@ public class DatabaseService {
 
     public String getAccountInfo(String email, int id) throws BankAccountNotFoundException {
         try {
-            return db.getAccounts().get(id).toString();
+            BankAccount account = db.getAccounts().get(id);
+            if(account.getOwnerEmail().equals(email) || getUserByEmail(email).getRole() == Role.ADMIN){
+                return account.toString();
+            }
+            return "You don't have permission to view this information";
         }catch (Exception e){
             throw new BankAccountNotFoundException();
         }

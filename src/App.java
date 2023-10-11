@@ -13,6 +13,7 @@ public class App {
     private RoleService service;
 
     public void run(){
+        db.addAdmin("Egor", "Rogachev", "admin", "admin");
         System.out.println("Please print start to start the program");
         String input = scanner.nextLine();
         if(input.equals("start")){
@@ -25,7 +26,7 @@ public class App {
                     break;
                 }else if(input.equals("sign up")){
                     signUp();
-                }else if(input.equals("sign.in")){
+                }else if(input.equals("sign in")){
                     signIn();
                 }else{
                     System.out.println("The entered data is incorrect, please print 'sign in' or 'sign up");
@@ -43,7 +44,7 @@ public class App {
         try {
             Distributor distributor = new Distributor();
             Role role = distributor.checkRole(email, password);
-            startInteracting(role);
+            startInteracting(email, role);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -68,7 +69,7 @@ public class App {
         }
     }
 
-    private void startInteracting(Role role){
+    private void startInteracting(String email, Role role){
         if(role == Role.USER){
             service = new UserService();
         }else if(role == Role.ADMIN){
@@ -83,7 +84,7 @@ public class App {
                 return;
             }
             try {
-                service.processRequest(request);
+                System.out.println(service.processRequest(email, request));
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
