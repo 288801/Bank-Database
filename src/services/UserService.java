@@ -3,10 +3,16 @@ package services;
 import exceptions.UserNotFoundException;
 import models.Role;
 import models.User;
+import operations.GetOperation;
+import operations.PutOperation;
+import operations.TransferOperation;
+
+import java.util.Arrays;
 
 public class UserService implements RoleService{
 
     private DatabaseService db = new DatabaseService();
+    private User user;
 
     @Override
     public boolean checkRole(String email, String password) throws UserNotFoundException {
@@ -19,6 +25,67 @@ public class UserService implements RoleService{
 
     @Override
     public String processRequest(String request) {
-        return null;
+        String[] req = request.split(" ");
+        String command = req[0];
+        String[] params = Arrays.copyOfRange(req, 1, req.length);
+        switch (command) {
+            case "--help":
+                return ("'--add balance' - to add new bank account \n" +
+                        "'--remove_ id' - to remove bank account by id \n" +
+                        "'--get_info id' - to get information about your account with id=id \n" +
+                        "'--get_all_info' - to get information about your bank accounts \n" +
+                        "'--add_money sum id' - to add money in bank account \n" +
+                        "'--get_money sum id' - to get money from account \n" +
+                        "'--transfer sum id1 id2' - to transfer money from first account to second");
+            case "--add":
+                try {
+                    db.createAccount(params[0]);
+                    return ("Operation completed");
+                } catch (Exception e) {
+                    return ("The entered data is incorrect, please use the format 'name surname balance'");
+                }
+            case "--remove_id":
+                try {
+                    int id = Integer.parseInt(params[0]);
+                    db.removeById(id);
+                    return ("Operation completed");
+                } catch (Exception e) {
+                    return (e.getMessage());
+                }
+            case "--get_info":
+                try {
+                    db.removeByName(params[0], params[1]);
+                    return ("Operation completed");
+                } catch (Exception e) {
+                    return (e.getMessage());
+                }
+            case "--get_all_info":
+                return request;
+            case "--add_money":
+                try {
+                    PutOperation operation = new PutOperation(Integer.parseInt(params[2]), params[0], params[1]);
+                    operation.doOperation();
+                    return ("Operation completed");
+                } catch (Exception e) {
+                    return (e.getMessage());
+                }
+            case "--get_money":
+                try {
+                    GetOperation operation = new GetOperation(Integer.parseInt(params[2]), params[0], params[1]);
+                    operation.doOperation();
+                    return ("Operation completed");
+                } catch (Exception e) {
+                    return (e.getMessage());
+                }
+            case "--transfer":
+                try {
+                    TransferOperation operation = new TransferOperation(Integer.parseInt(params[4]), params[0], params[1], params[2], params[3]);
+                    operation.doOperation();
+                    return ("Operation completed");
+                } catch (Exception e) {
+                    return (e.getMessage());
+                }
+            default:
+                return ("Input command is incorrect. To view a list of possible commands, enter '--help'");
     }
 }
