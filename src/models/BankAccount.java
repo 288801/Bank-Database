@@ -1,15 +1,17 @@
 package models;
 
+import db.Operations;
 import operations.OperationImpl;
+import services.DatabaseService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BankAccount {
     private int accountId;
     private User owner;
     private int balance;
-    private List<OperationImpl> operationHistory = new ArrayList<>();
 
     public BankAccount(int accountId, User user, int balance) {
         this.accountId = accountId;
@@ -23,7 +25,7 @@ public class BankAccount {
                 "ownerName='" + owner.getName() +
                 "', ownerSurname='" + owner.getSurname() +
                 "', balance=" + balance +
-                ", operationHistory=" + operationHistory +
+                ", operationHistory=" + DatabaseService.getInstance().getAllAccountOperations(accountId) +
                 '}';
     }
 
@@ -41,11 +43,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public List<OperationImpl> getOperationHistory() {
-        return operationHistory;
-    }
-
-    public void addOperation(OperationImpl operation) {
-        this.operationHistory.add(operation);
+    public int getAccountId() {
+        return accountId;
     }
 }

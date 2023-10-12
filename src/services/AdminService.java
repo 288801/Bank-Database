@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class AdminService implements RoleService{
 
-    private DatabaseService db = new DatabaseService();
+    private DatabaseService db = DatabaseService.getInstance();
 
     @Override
     public boolean checkRole(String email, String password) throws UserNotFoundException {

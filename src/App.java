@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class App {
 
     private Scanner scanner = new Scanner(System.in);
-    private DatabaseService db = new DatabaseService();
+    private DatabaseService db = DatabaseService.getInstance();
     private RoleService service;
 
     public void run(){

@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class UserService implements RoleService{
 
-    private DatabaseService db = new DatabaseService();
+    private DatabaseService db = DatabaseService.getInstance();
 
     @Override
     public boolean checkRole(String email, String password) throws UserNotFoundException {
@@ -65,7 +65,8 @@ public class UserService implements RoleService{
                 }
             case "--add_money":
                 try {
-                    PutOperation operation = new PutOperation(Integer.parseInt(params[0]), Integer.parseInt(params[1]));
+                    int id = db.operationDb.size();
+                    PutOperation operation = new PutOperation(id, Integer.parseInt(params[0]), Integer.parseInt(params[1]));
                     operation.doOperation();
                     return ("Operation completed");
                 } catch (Exception e) {
@@ -73,7 +74,8 @@ public class UserService implements RoleService{
                 }
             case "--get_money":
                 try {
-                    GetOperation operation = new GetOperation(Integer.parseInt(params[0]), Integer.parseInt(params[1]));
+                    int id = db.operationDb.size();
+                    GetOperation operation = new GetOperation(id, Integer.parseInt(params[0]), Integer.parseInt(params[1]));
                     operation.doOperation();
                     return ("Operation completed");
                 } catch (Exception e) {
@@ -81,7 +83,8 @@ public class UserService implements RoleService{
                 }
             case "--transfer":
                 try {
-                    TransferOperation operation = new TransferOperation(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]));
+                    int id = db.operationDb.size();
+                    TransferOperation operation = new TransferOperation(id, Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]));
                     operation.doOperation();
                     return ("Operation completed");
                 } catch (Exception e) {

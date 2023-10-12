@@ -1,61 +1,79 @@
 package services;
 
-import db.Database;
+import db.Accounts;
+import db.Operations;
+import db.Users;
 import exceptions.BankAccountNotFoundException;
 import exceptions.UserNotFoundException;
 import models.BankAccount;
 import models.Role;
 import models.User;
+import operations.Operation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseService {
 
-    private Database db = Database.getInstance();
+    Users userDb = Users.getInstance();
+    Accounts accountDb = Accounts.getInstance();
+    Operations operationDb = Operations.getInstance();
+    private static DatabaseService instance;
+
+    public static DatabaseService getInstance() {
+        if (instance == null)
+            instance = new DatabaseService();
+
+        return instance;
+    }
+
+    private DatabaseService() {}
 
     public void addUser(String name, String surname, String email, String password){
-        db.addUser(new User(name, surname, email, password));
+        userDb.add(new User(name, surname, email, password));
     }
 
     public void addAdmin(String name, String surname, String email, String password){
-        db.addUser(new User(name, surname, email, password, Role.ADMIN));
+        userDb.add(new User(name, surname, email, password, Role.ADMIN));
     }
 
     public void createAccount(String email, int balance) throws UserNotFoundException {
-        int id = db.getAccounts().size();
-        db.addAccount(new BankAccount(id, getUserByEmail(email), balance));
+        int id = accountDb.size();
+        accountDb.add(new BankAccount(id, userDb.getById(email), balance));
     }
 
     public User getUserByEmail(String email) throws UserNotFoundException {
-        for(User user : db.getUsers()){
-            if(user.getEmail().equals(email)){
-                return user;
-            }
-        }
-        throw new UserNotFoundException();
+        return userDb.getById(email);
     }
 
     public boolean checkUser(String email){
-        for(User user : db.getUsers()){
-            if(user.getEmail().equals(email)){
-                return true;
-            }
+        try{
+            userDb.getById(email);
+            return true;
+        }catch (Exception e){
+            return false;
         }
-        return false;
     }
 
     public BankAccount getAccountById(int id) throws BankAccountNotFoundException {
-        try {
-            return db.getAccounts().get(id);
-        }catch (Exception e){
-            throw new BankAccountNotFoundException();
+        return accountDb.getById(String.valueOf(id));
+    }
+
+    public List<Operation> getAllAccountOperations(int id){
+        List<Operation> result = new ArrayList<>();
+        for(Operation operation : operationDb.getTable()){
+            if(operation.getId() ==  id){
+                result.add(operation);
+            }
         }
+
+        return result;
     }
 
     public List<BankAccount> getUserAccounts(String email){
         List<BankAccount> accounts = new ArrayList<>();
-        for(BankAccount account : db.getAccounts()){
+        for(BankAccount account : accountDb.getTable()){
             if(account.getOwnerEmail().equals(email)){
                 accounts.add(account);
             }
@@ -77,7 +95,7 @@ public class DatabaseService {
 
     public String getAccountInfo(String email, int id) throws BankAccountNotFoundException {
         try {
-            BankAccount account = db.getAccounts().get(id);
+            BankAccount account = accountDb.getById(String.valueOf(id));
             if(account.getOwnerEmail().equals(email) || getUserByEmail(email).getRole() == Role.ADMIN){
                 return account.toString();
             }
@@ -88,32 +106,27 @@ public class DatabaseService {
     }
 
     public String getDatabase(){
-        if(db.getAccounts().isEmpty() && db.getUsers().isEmpty()){
+        if(userDb.getTable().isEmpty() && accountDb.getTable().isEmpty()){
             return "Database is empty";
         }
         String result = "";
-        for(User user : db.getUsers()){
+        for(User user : userDb.getTable()){
             result += user.toString() + "\n";
         }
-        for(BankAccount account : db.getAccounts()){
+        for(BankAccount account : accountDb.getTable()){
             result += account.toString() + "\n";
+        }
+        for(Operation operation : operationDb.getTable()){
+            result += operation.toString() + "\n";
         }
         return result;
     }
 
     public void removeAccountById(int id) throws UserNotFoundException {
-        try{
-            db.getAccounts().remove(id);
-        }catch (Exception e){
-            throw new UserNotFoundException();
-        }
+
     }
 
     public void removeUserByEmail(String email) throws UserNotFoundException {
-        try{
-            db.getAccounts().remove(getUserByEmail(email));
-        }catch (Exception e){
-            throw new UserNotFoundException();
-        }
+
     }
 }

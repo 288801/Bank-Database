@@ -1,5 +1,6 @@
 package operations;
  
+import db.Operations;
 import exceptions.BankAccountNotFoundException;
 import models.BankAccount;
 import exceptions.DontHaveEnoughMoneyException;
@@ -8,7 +9,8 @@ import exceptions.DontHaveEnoughMoneyException;
 public class TransferOperation extends OperationImpl {
     private BankAccount destination;
  
-    public TransferOperation(int sum, int senderId, int destinationId) throws BankAccountNotFoundException {
+    public TransferOperation(int id, int sum, int senderId, int destinationId) throws BankAccountNotFoundException {
+        operationId = id;
         this.sum = sum;
         account = db.getAccountById(senderId);
         destination = db.getAccountById(destinationId);
@@ -21,8 +23,7 @@ public class TransferOperation extends OperationImpl {
         }
         account.setBalance(account.getBalance()-sum);
         destination.setBalance(destination.getBalance()+sum);
-        account.addOperation(this);
-        destination.addOperation(this);
+        Operations.getInstance().add(this);
     }
  
     @Override
@@ -31,5 +32,9 @@ public class TransferOperation extends OperationImpl {
                 account.getOwnerSurname() + " to " +
                 destination.getOwnerName() + " " +
                 destination.getOwnerSurname();
+    }
+
+    public int getId(){
+        return account.getAccountId();
     }
 }
