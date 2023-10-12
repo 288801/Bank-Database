@@ -1,6 +1,6 @@
 package models;
 
-import operations.Operation;
+import operations.OperationImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ public class BankAccount {
     private int accountId;
     private User owner;
     private int balance;
-    private List<Operation> operationHistory = new ArrayList<>();
+    private List<OperationImpl> operationHistory = new ArrayList<>();
 
     public BankAccount(int accountId, User user, int balance) {
         this.accountId = accountId;
@@ -41,11 +41,11 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public List<Operation> getOperationHistory() {
+    public List<OperationImpl> getOperationHistory() {
         return operationHistory;
     }
 
-    public void addOperation(Operation operation) {
+    public void addOperation(OperationImpl operation) {
         this.operationHistory.add(operation);
     }
 }

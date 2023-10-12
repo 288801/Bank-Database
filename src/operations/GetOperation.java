@@ -2,10 +2,9 @@ package operations;
  
 import exceptions.BankAccountNotFoundException;
 import exceptions.DontHaveEnoughMoneyException;
-import exceptions.UserNotFoundException;
- 
+
 // Снятие суммы со счета
-public class GetOperation extends Operation{
+public class GetOperation extends OperationImpl {
 
     public GetOperation(int sum, int id) throws BankAccountNotFoundException {
         this.sum = sum;

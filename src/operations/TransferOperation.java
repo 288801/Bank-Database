@@ -3,10 +3,9 @@ package operations;
 import exceptions.BankAccountNotFoundException;
 import models.BankAccount;
 import exceptions.DontHaveEnoughMoneyException;
-import exceptions.UserNotFoundException;
- 
+
 // Передача суммы с одного счета на другой
-public class TransferOperation extends Operation{
+public class TransferOperation extends OperationImpl {
     private BankAccount destination;
  
     public TransferOperation(int sum, int senderId, int destinationId) throws BankAccountNotFoundException {
