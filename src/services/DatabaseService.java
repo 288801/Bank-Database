@@ -16,6 +16,7 @@ import java.util.List;
 
 public class DatabaseService {
 
+    //todo разделить на 3 сервиса
     Users userDb = Users.getInstance();
     Accounts accountDb = Accounts.getInstance();
     public Operations operationDb = Operations.getInstance();
