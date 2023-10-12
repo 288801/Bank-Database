@@ -18,7 +18,7 @@ public class DatabaseService {
 
     Users userDb = Users.getInstance();
     Accounts accountDb = Accounts.getInstance();
-    Operations operationDb = Operations.getInstance();
+    public Operations operationDb = Operations.getInstance();
     private static DatabaseService instance;
 
     public static DatabaseService getInstance() {
