@@ -1,10 +1,16 @@
 package commands;
 
 import operations.GetOperation;
+import services.AccountDatabaseService;
 import services.DatabaseService;
+import services.OperationDatabaseService;
+import services.UserDatabaseService;
 
 public class GetMoney implements Command{
 
+    AccountDatabaseService accountDb = AccountDatabaseService.getInstance();
+    UserDatabaseService userDb = UserDatabaseService.getInstance();
+    OperationDatabaseService operationDb = OperationDatabaseService.getInstance();
     DatabaseService db = DatabaseService.getInstance();
 
     @Override
