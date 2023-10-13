@@ -3,6 +3,7 @@ package models;
 import db.Operations;
 import operations.OperationImpl;
 import services.DatabaseService;
+import services.OperationDatabaseService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +26,7 @@ public class BankAccount {
                 "ownerName='" + owner.getName() +
                 "', ownerSurname='" + owner.getSurname() +
                 "', balance=" + balance +
-                ", operationHistory=" + DatabaseService.getInstance().getAllAccountOperations(accountId) +
+                ", operationHistory=" + OperationDatabaseService.getInstance().getAllAccountOperations(accountId) +
                 '}';
     }
 
