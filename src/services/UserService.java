@@ -1,6 +1,9 @@
 package services;
 
 import commands.*;
+import db.Accounts;
+import db.Operations;
+import db.Users;
 import exceptions.UserNotFoundException;
 import models.Role;
 import models.User;
@@ -14,7 +17,10 @@ import java.util.Map;
 
 public class UserService implements RoleService{
 
-    private DatabaseService db = DatabaseService.getInstance();
+    AccountDatabaseService accountDb = AccountDatabaseService.getInstance();
+    UserDatabaseService userDb = UserDatabaseService.getInstance();
+    OperationDatabaseService operationDb = OperationDatabaseService.getInstance();
+    DatabaseService db = DatabaseService.getInstance();
 
     static Map<String, Command> commands = new HashMap<>(){{
         put("--help", new HelpUser());
@@ -29,7 +35,7 @@ public class UserService implements RoleService{
 
     @Override
     public boolean checkRole(String email, String password) throws UserNotFoundException {
-        User user = db.getUserByEmail(email);
+        User user = userDb.getUserByEmail(email);
         if(user.checkPassword(password) && user.getRole() == Role.USER){
             return true;
         }

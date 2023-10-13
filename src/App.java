@@ -1,19 +1,22 @@
+import db.Accounts;
+import db.Operations;
+import db.Users;
 import models.Role;
-import services.AdminService;
-import services.DatabaseService;
-import services.RoleService;
-import services.UserService;
+import services.*;
 
 import java.util.Scanner;
 
 public class App {
 
     private Scanner scanner = new Scanner(System.in);
-    private DatabaseService db = DatabaseService.getInstance();
+    AccountDatabaseService accountDb = AccountDatabaseService.getInstance();
+    UserDatabaseService userDb = UserDatabaseService.getInstance();
+    OperationDatabaseService operationDb = OperationDatabaseService.getInstance();
+    DatabaseService db = DatabaseService.getInstance();
     private RoleService service;
 
     public void run(){
-        db.addAdmin("Egor", "Rogachev", "admin", "admin");
+        userDb.addAdmin("Egor", "Rogachev", "admin", "admin");
         System.out.println("Please print start to start the program");
         String input = scanner.nextLine();
         if(input.equals("start")){
@@ -58,11 +61,11 @@ public class App {
             String surname = input[1];
             String email = input[2];
             String password = input[3];
-            if(db.checkUser(email)){
+            if(userDb.checkUser(email)){
                 System.out.println("This user is already exist");
                 return;
             }
-            db.addUser(name, surname, email, password);
+            userDb.addUser(name, surname, email, password);
             System.out.println("You have successfully registered!");
         }catch (Exception e){
             System.out.println("Input data is incorrect, try again!");
