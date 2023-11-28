@@ -4,6 +4,7 @@ import models.BankAccount;
 import exceptions.DontHaveEnoughMoneyException;
 import services.AccountDatabaseService;
 import services.DatabaseService;
+import services.OperationDatabaseService;
 import services.UserDatabaseService;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ public abstract class OperationImpl implements Operation{
     protected Date date = new Date(System.currentTimeMillis());
     protected BankAccount account;
     protected int sum;
+    protected OperationDatabaseService operationDatabaseService = OperationDatabaseService.getInstance();
 
     public abstract void doOperation() throws DontHaveEnoughMoneyException;
 

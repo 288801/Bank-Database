@@ -23,7 +23,7 @@ public class TransferOperation extends OperationImpl {
         }
         account.setBalance(account.getBalance()-sum);
         destination.setBalance(destination.getBalance()+sum);
-        Operations.getInstance().add(this);
+        operationDatabaseService.addOperation(this);
     }
  
     @Override

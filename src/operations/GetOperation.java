@@ -3,6 +3,7 @@ package operations;
 import db.Operations;
 import exceptions.BankAccountNotFoundException;
 import exceptions.DontHaveEnoughMoneyException;
+import services.OperationDatabaseService;
 
 // Снятие суммы со счета
 public class GetOperation extends OperationImpl {
@@ -19,7 +20,7 @@ public class GetOperation extends OperationImpl {
             throw new DontHaveEnoughMoneyException();
         }
         account.setBalance(account.getBalance()-sum);
-        Operations.getInstance().add(this);
+        operationDatabaseService.addOperation(this);
     }
  
     @Override

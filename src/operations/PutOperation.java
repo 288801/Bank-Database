@@ -15,7 +15,7 @@ public class PutOperation extends OperationImpl {
     @Override
     public void doOperation() {
         account.setBalance(account.getBalance()+sum);
-        Operations.getInstance().add(this);
+        operationDatabaseService.addOperation(this);
     }
  
     @Override

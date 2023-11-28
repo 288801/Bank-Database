@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AccountDatabaseService {
 
-    Accounts accountDb = Accounts.getInstance();
+    private Accounts accountDb = Accounts.getInstance();
     private static AccountDatabaseService instance;
 
     public static AccountDatabaseService getInstance() {

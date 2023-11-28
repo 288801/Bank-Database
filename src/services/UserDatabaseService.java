@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserDatabaseService {
 
-    Users userDb = Users.getInstance();
+    private Users userDb = Users.getInstance();
     private static UserDatabaseService instance;
 
     public static UserDatabaseService getInstance() {
