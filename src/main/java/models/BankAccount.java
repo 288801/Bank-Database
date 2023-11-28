@@ -1,13 +1,6 @@
 package models;
 
-import db.Operations;
-import operations.OperationImpl;
-import services.DatabaseService;
 import services.OperationDatabaseService;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class BankAccount {
     private int accountId;

@@ -1,8 +1,5 @@
 package services;
 
-import db.Accounts;
-import db.Operations;
-import db.Users;
 import exceptions.BankAccountNotFoundException;
 import exceptions.UserNotFoundException;
 import models.BankAccount;

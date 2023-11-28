@@ -1,17 +1,18 @@
 package operations;
  
-import db.Operations;
 import exceptions.BankAccountNotFoundException;
 import exceptions.DontHaveEnoughMoneyException;
-import services.OperationDatabaseService;
+
+import java.util.Date;
 
 // Снятие суммы со счета
 public class GetOperation extends OperationImpl {
 
-    public GetOperation(int id, int sum, int accountId) throws BankAccountNotFoundException {
+    public GetOperation(int id, int sum, int accountId, Date date) throws BankAccountNotFoundException {
         operationId = id;
         this.sum = sum;
         account = db.getAccountById(accountId);
+        this.date = date;
     }
  
     @Override

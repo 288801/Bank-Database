@@ -1,15 +1,9 @@
 package services;
 
 import commands.*;
-import db.Accounts;
-import db.Operations;
-import db.Users;
 import exceptions.UserNotFoundException;
 import models.Role;
 import models.User;
-import operations.GetOperation;
-import operations.PutOperation;
-import operations.TransferOperation;
 
 import java.util.Arrays;
 import java.util.HashMap;

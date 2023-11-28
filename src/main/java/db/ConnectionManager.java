@@ -4,26 +4,26 @@ import java.sql.*;
 import java.util.Properties;
 
 public class ConnectionManager {
-    private static ConnectionManager INSTANCE;
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/database";
+    private static ConnectionManager instance;
+    private static final String DB_URL = "jdbc:mysql://localhost:3307/bank_db";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "Qwerty098";
+    private static final String DB_PASS = "1111";
 
     // JDBC variables for opening and managing connection
     private static Connection connection;
     private static Statement statement;
 
     public static ConnectionManager getInstance() {
-        if (INSTANCE == null) {
+        if (instance == null) {
             try {
                 DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            INSTANCE = new ConnectionManager();
-            INSTANCE.connect();
+            instance = new ConnectionManager();
+            instance.connect();
         }
-        return INSTANCE;
+        return instance;
     }
 
     public Connection reconnect() {

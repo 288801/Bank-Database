@@ -1,15 +1,17 @@
 package operations;
  
-import db.Operations;
 import exceptions.BankAccountNotFoundException;
+
+import java.util.Date;
 
 // Добавление суммы на счет
 public class PutOperation extends OperationImpl {
 
-    public PutOperation(int id, int sum, int accountId) throws BankAccountNotFoundException {
+    public PutOperation(int id, int sum, int accountId, Date date) throws BankAccountNotFoundException {
         operationId = id;
         this.sum = sum;
         account = db.getAccountById(accountId);
+        this.date = date;
     }
  
     @Override

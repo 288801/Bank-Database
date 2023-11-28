@@ -1,18 +1,8 @@
 package services;
 
-import db.Accounts;
-import db.Operations;
-import db.Users;
-import exceptions.BankAccountNotFoundException;
-import exceptions.UserNotFoundException;
 import models.BankAccount;
-import models.Role;
 import models.User;
 import operations.Operation;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class DatabaseService {
 

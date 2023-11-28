@@ -1,19 +1,19 @@
 package operations;
  
-import db.Operations;
 import exceptions.BankAccountNotFoundException;
-import models.BankAccount;
 import exceptions.DontHaveEnoughMoneyException;
+
+import java.util.Date;
 
 // Передача суммы с одного счета на другой
 public class TransferOperation extends OperationImpl {
-    private BankAccount destination;
- 
-    public TransferOperation(int id, int sum, int senderId, int destinationId) throws BankAccountNotFoundException {
+
+    public TransferOperation(int id, int sum, int senderId, int destinationId, Date date) throws BankAccountNotFoundException {
         operationId = id;
         this.sum = sum;
         account = db.getAccountById(senderId);
         destination = db.getAccountById(destinationId);
+        this.date = date;
     }
 
     @Override

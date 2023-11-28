@@ -1,9 +1,5 @@
 package services;
 
-import db.Accounts;
-import db.Operations;
-import db.Users;
-import models.User;
 import operations.Operation;
 
 import java.util.ArrayList;
