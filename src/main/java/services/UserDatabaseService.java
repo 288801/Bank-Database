@@ -4,12 +4,13 @@ import exceptions.UserNotFoundException;
 import models.BankAccount;
 import models.Role;
 import models.User;
+import repositories.UserRepository;
 
 import java.util.List;
 
 public class UserDatabaseService {
 
-    private Users userDb = Users.getInstance();
+    private UserRepository userRepository = UserRepository.getInstance();
     private static UserDatabaseService instance;
 
     public static UserDatabaseService getInstance() {
@@ -22,20 +23,20 @@ public class UserDatabaseService {
     private UserDatabaseService() {}
 
     public void addUser(String name, String surname, String email, String password){
-        userDb.add(new User(name, surname, email, password));
+        userRepository.add(new User(name, surname, email, password));
     }
 
     public void addAdmin(String name, String surname, String email, String password){
-        userDb.add(new User(name, surname, email, password, Role.ADMIN));
+        userRepository.add(new User(name, surname, email, password, Role.ADMIN));
     }
 
     public User getUserByEmail(String email) throws UserNotFoundException {
-        return userDb.getById(email);
+        return userRepository.getByEmail(email);
     }
 
     public boolean checkUser(String email){
         try{
-            userDb.getById(email);
+            userRepository.getByEmail(email);
             return true;
         }catch (Exception e){
             return false;
@@ -55,7 +56,7 @@ public class UserDatabaseService {
     }
 
     public void removeUserByEmail(String email) throws UserNotFoundException {
-        userDb.removeById(email);
+        userRepository.removeByEmail(email);
     }
 
 }

@@ -47,9 +47,9 @@ public class OperationRepository {
             }else{
                 type = "TRANSFORM";
             }
-            connectionManager.executeUpdate("INSERT INTO `operation`(`operation_id`, `date`," +
+            connectionManager.executeUpdate("INSERT INTO `operation`(`date`," +
                     " `sender_id`, `recipient_id`, `sum`, `type`) VALUES ( '"
-                    + operation.getId() + "', " + operation.getDate() + ", '" + operation.getAccountId() +
+                    + operation.getDate() + ", '" + operation.getAccountId() +
                     ", '" + operation.getDestinationId() + ", '" + operation.getSum() + ", '" + type + "');");
             return;
         } catch (Exception e) {

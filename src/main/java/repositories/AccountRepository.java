@@ -40,8 +40,8 @@ public class AccountRepository {
 
     public void add(BankAccount bankAccount) {
         try {
-            connectionManager.executeUpdate("INSERT INTO `account`(`account_id`, `owner_id`, `balance`) VALUES ( '"
-                    + bankAccount.getAccountId() + "', " + bankAccount.getOwnerEmail() + ", '" + bankAccount.getBalance() + "');");
+            connectionManager.executeUpdate("INSERT INTO `account`(`owner_id`, `balance`) VALUES ( '"
+                    + bankAccount.getOwnerEmail() + ", '" + bankAccount.getBalance() + "');");
             return;
         } catch (Exception e) {
             System.out.println(e.getMessage());

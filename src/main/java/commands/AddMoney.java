@@ -6,6 +6,8 @@ import services.DatabaseService;
 import services.OperationDatabaseService;
 import services.UserDatabaseService;
 
+import java.util.Date;
+
 public class AddMoney implements Command{
 
     AccountDatabaseService accountDb = AccountDatabaseService.getInstance();
@@ -16,8 +18,7 @@ public class AddMoney implements Command{
     @Override
     public String execute(String email, String[] params) {
         try {
-            int id = db.operationDb.size();
-            PutOperation operation = new PutOperation(id, Integer.parseInt(params[0]), Integer.parseInt(params[1]));
+            PutOperation operation = new PutOperation(0, Integer.parseInt(params[0]), Integer.parseInt(params[1]), new Date(System.currentTimeMillis()));
             operation.doOperation();
             return ("Operation completed");
         } catch (Exception e) {
