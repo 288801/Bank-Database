@@ -1,12 +1,14 @@
 package commands;
 
-import operations.PutOperation;
+import operations.TransferOperation;
 import services.AccountDatabaseService;
 import services.DatabaseService;
 import services.OperationDatabaseService;
 import services.UserDatabaseService;
 
-public class AddMoney implements Command{
+import java.util.Date;
+
+public class TransferMoney implements Command{
 
     AccountDatabaseService accountDb = AccountDatabaseService.getInstance();
     UserDatabaseService userDb = UserDatabaseService.getInstance();
@@ -16,8 +18,8 @@ public class AddMoney implements Command{
     @Override
     public String execute(String email, String[] params) {
         try {
-            int id = db.operationDb.size();
-            PutOperation operation = new PutOperation(id, Integer.parseInt(params[0]), Integer.parseInt(params[1]));
+            TransferOperation operation = new TransferOperation(0, Integer.parseInt(params[0]),
+                    Integer.parseInt(params[1]), Integer.parseInt(params[2]), new Date(System.currentTimeMillis()));
             operation.doOperation();
             return ("Operation completed");
         } catch (Exception e) {

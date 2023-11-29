@@ -1,16 +1,15 @@
 package services;
 
-import db.Accounts;
-import db.Operations;
-import db.Users;
 import operations.Operation;
+import operations.OperationImpl;
+import repositories.OperationRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OperationDatabaseService {
 
-    Operations operationDb = Operations.getInstance();
+    private OperationRepository operationRepository = OperationRepository.getInstance();
     private static OperationDatabaseService instance;
 
     public static OperationDatabaseService getInstance() {
@@ -24,13 +23,17 @@ public class OperationDatabaseService {
 
     public List<Operation> getAllAccountOperations(int id){
         List<Operation> result = new ArrayList<>();
-        for(Operation operation : operationDb.getTable()){
+        for(Operation operation : operationRepository.getAll()){
             if(operation.getId() ==  id){
                 result.add(operation);
             }
         }
 
         return result;
+    }
+
+    public void addOperation(OperationImpl operation){
+        operationRepository.add(operation);
     }
 
 }

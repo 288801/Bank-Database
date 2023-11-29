@@ -1,6 +1,3 @@
-import db.Accounts;
-import db.Operations;
-import db.Users;
 import models.Role;
 import services.*;
 
@@ -16,7 +13,6 @@ public class App {
     private RoleService service;
 
     public void run(){
-        userDb.addAdmin("Egor", "Rogachev", "admin", "admin");
         System.out.println("Please print start to start the program");
         String input = scanner.nextLine();
         if(input.equals("start")){
