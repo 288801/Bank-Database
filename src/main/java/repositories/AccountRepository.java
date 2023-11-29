@@ -26,8 +26,8 @@ public class AccountRepository {
     public List<BankAccount> getAll() {
         try{
             List<BankAccount> accounts = new ArrayList<>();
-            ResultSet rs = connectionManager.executeSelect("SELECT * FROM ACCOUNT");
-            while (rs.next()){
+            ResultSet rs = connectionManager.executeSelect("SELECT * FROM `account`");
+            while (!rs.isClosed() && rs.next()) {
                 accounts.add(getAccountFromResultSet(rs));
             }
             rs.close();
@@ -41,7 +41,7 @@ public class AccountRepository {
     public void add(BankAccount bankAccount) {
         try {
             connectionManager.executeUpdate("INSERT INTO `account`(`owner_id`, `balance`) VALUES ( '"
-                    + bankAccount.getOwnerEmail() + ", '" + bankAccount.getBalance() + "');");
+                    + bankAccount.getOwnerEmail() + "', " + bankAccount.getBalance() + ")");
             return;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -50,7 +50,7 @@ public class AccountRepository {
 
     public BankAccount getById(int id) {
         try {
-            ResultSet rs = connectionManager.executeSelect("SELECT * FROM ACCOUNT WHERE account_id = " + id);
+            ResultSet rs = connectionManager.executeSelect("SELECT * FROM `account` WHERE account_id = " + id);
             rs.next();
             BankAccount account = getAccountFromResultSet(rs);
             rs.close();
@@ -63,7 +63,7 @@ public class AccountRepository {
 
     public void removeById(int id) {
         try {
-            connectionManager.executeUpdate("DELETE FROM ACCOUNT WHERE account_id = " + id);
+            connectionManager.executeUpdate("DELETE FROM `account` WHERE account_id = " + id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -71,7 +71,7 @@ public class AccountRepository {
 
     public void update(int id, BankAccount account) {
         try {
-            connectionManager.executeUpdate("UPDATE ACCOUNT SET owner_id = '" + account.getOwnerName() + "', balance = "
+            connectionManager.executeUpdate("UPDATE `account` SET owner_id = '" + account.getOwnerName() + "', balance = "
                     + account.getBalance() + "' WHERE account_id = " + id);
         } catch (Exception e) {
             System.out.println(e.getMessage());

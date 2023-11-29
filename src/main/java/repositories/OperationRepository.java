@@ -25,8 +25,8 @@ public class OperationRepository {
     public List<OperationImpl> getAll() {
         try{
             List<OperationImpl> operations = new ArrayList<>();
-            ResultSet rs = connectionManager.executeSelect("SELECT * FROM OPERATION");
-            while (rs.next()){
+            ResultSet rs = connectionManager.executeSelect("SELECT * FROM `operation`");
+            while (!rs.isClosed() && rs.next()) {
                 operations.add(getOperationFromResultSet(rs));
             }
             rs.close();
@@ -49,8 +49,8 @@ public class OperationRepository {
             }
             connectionManager.executeUpdate("INSERT INTO `operation`(`date`," +
                     " `sender_id`, `recipient_id`, `sum`, `type`) VALUES ( '"
-                    + operation.getDate() + ", '" + operation.getAccountId() +
-                    ", '" + operation.getDestinationId() + ", '" + operation.getSum() + ", '" + type + "');");
+                    + operation.getDate() + "', " + operation.getAccountId() +
+                    ", " + operation.getDestinationId() + ", " + operation.getSum() + ", '" + type + "')");
             return;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -59,7 +59,7 @@ public class OperationRepository {
 
     public OperationImpl getById(int id) {
         try {
-            ResultSet rs = connectionManager.executeSelect("SELECT * FROM OPERATION WHERE operation_id = " + id);
+            ResultSet rs = connectionManager.executeSelect("SELECT * FROM `operation` WHERE operation_id = " + id);
             rs.next();
             OperationImpl operation = getOperationFromResultSet(rs);
             rs.close();
@@ -72,7 +72,7 @@ public class OperationRepository {
 
     public void removeById(int id) {
         try {
-            connectionManager.executeUpdate("DELETE FROM OPERATION WHERE operation_id = " + id);
+            connectionManager.executeUpdate("DELETE FROM `operation` WHERE operation_id = " + id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -88,7 +88,7 @@ public class OperationRepository {
             }else{
                 type = "TRANSFORM";
             }
-            connectionManager.executeUpdate("UPDATE OPERATION SET date = '" + operation.getDate() + "', sender_id = "
+            connectionManager.executeUpdate("UPDATE `operation` SET date = '" + operation.getDate() + "', sender_id = "
                     + operation.getAccountId() + "', recipient_id = "
                     + operation.getDestinationId() + "', sum = "
                     + operation.getSum() + "', type = "

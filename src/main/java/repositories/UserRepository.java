@@ -38,9 +38,9 @@ public class UserRepository {
 
     public void add(User user) {
         try {
-            connectionManager.executeUpdate("INSERT INTO USER (email, name, surname, role, password) VALUES ( '"
-                    + user.getEmail() + "', " + user.getName() + ", '" + user.getSurname()
-                    + ", '" + (user.getRole()== Role.USER ? "USER" : "ADMIN") + ", '" + user.getPassword() + "');");
+            connectionManager.executeUpdate("INSERT INTO `user`(`email`, `name`, `surname`, `role`, `password`) VALUES ( '"
+                    + user.getEmail() + "', '" + user.getName() + "', '" + user.getSurname()
+                    + "', '" + (user.getRole()== Role.USER ? "USER" : "ADMIN") + "', '" + user.getPassword() + "')");
             return;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -49,7 +49,7 @@ public class UserRepository {
 
     public User getByEmail(String email) {
         try {
-            ResultSet rs = connectionManager.executeSelect("SELECT * FROM USER WHERE email = " + email);
+            ResultSet rs = connectionManager.executeSelect("SELECT * FROM `user` WHERE email = '" + email + "'");
             rs.next();
             User user = getUserFromResultSet(rs);
             rs.close();
@@ -62,7 +62,7 @@ public class UserRepository {
 
     public void removeByEmail(String email) {
         try {
-            connectionManager.executeUpdate("DELETE FROM USER WHERE email = " + email);
+            connectionManager.executeUpdate("DELETE FROM `user` WHERE email = " + email);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -70,7 +70,7 @@ public class UserRepository {
 
     public void update(String email, User user) {
         try {
-            connectionManager.executeUpdate("UPDATE USER SET name = '" + user.getName() + "', surname = "
+            connectionManager.executeUpdate("UPDATE `user` SET name = '" + user.getName() + "', surname = "
                     + user.getSurname() + ", password = '" + user.getPassword() + "' WHERE email = " + email);
         } catch (Exception e) {
             System.out.println(e.getMessage());
