@@ -1,15 +1,16 @@
-package services;
+package services.roles;
 
 import commands.*;
 import exceptions.UserNotFoundException;
 import models.Role;
 import models.User;
+import services.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserService implements RoleService{
+public class UserService implements RoleService {
 
     AccountDatabaseService accountDb = AccountDatabaseService.getInstance();
     UserDatabaseService userDb = UserDatabaseService.getInstance();

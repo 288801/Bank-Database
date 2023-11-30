@@ -6,12 +6,15 @@ import operations.Operation;
 import repositories.AccountRepository;
 import repositories.OperationRepository;
 import repositories.UserRepository;
+import repositories.impl.AccountRepositoryImpl;
+import repositories.impl.OperationRepositoryImpl;
+import repositories.impl.UserRepositoryImpl;
 
 public class DatabaseService {
 
-    private UserRepository userRepository = UserRepository.getInstance();
-    private AccountRepository accountRepository = AccountRepository.getInstance();
-    private OperationRepository operationRepository = OperationRepository.getInstance();
+    private UserRepository userRepository = UserRepositoryImpl.getInstance();
+    private AccountRepository accountRepository = AccountRepositoryImpl.getInstance();
+    private OperationRepository operationRepository = OperationRepositoryImpl.getInstance();
     private static DatabaseService instance;
 
     public static DatabaseService getInstance() {

@@ -3,13 +3,14 @@ package services;
 import operations.Operation;
 import operations.OperationImpl;
 import repositories.OperationRepository;
+import repositories.impl.OperationRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OperationDatabaseService {
 
-    private OperationRepository operationRepository = OperationRepository.getInstance();
+    private OperationRepository operationRepository = OperationRepositoryImpl.getInstance();
     private static OperationDatabaseService instance;
 
     public static OperationDatabaseService getInstance() {
@@ -21,15 +22,8 @@ public class OperationDatabaseService {
 
     private OperationDatabaseService() {}
 
-    public List<Operation> getAllAccountOperations(int id){
-        List<Operation> result = new ArrayList<>();
-        for(Operation operation : operationRepository.getAll()){
-            if(operation.getId() ==  id){
-                result.add(operation);
-            }
-        }
-
-        return result;
+    public List<OperationImpl> getAllAccountOperations(int id){
+        return operationRepository.getAllAccountOperations(id);
     }
 
     public void addOperation(OperationImpl operation){

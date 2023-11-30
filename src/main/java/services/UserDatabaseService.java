@@ -5,12 +5,13 @@ import models.BankAccount;
 import models.Role;
 import models.User;
 import repositories.UserRepository;
+import repositories.impl.UserRepositoryImpl;
 
 import java.util.List;
 
 public class UserDatabaseService {
 
-    private UserRepository userRepository = UserRepository.getInstance();
+    private UserRepository userRepository = UserRepositoryImpl.getInstance();
     private static UserDatabaseService instance;
 
     public static UserDatabaseService getInstance() {
@@ -31,12 +32,12 @@ public class UserDatabaseService {
     }
 
     public User getUserByEmail(String email) throws UserNotFoundException {
-        return userRepository.getByEmail(email);
+        return userRepository.getById(email);
     }
 
     public boolean checkUser(String email){
         try{
-            userRepository.getByEmail(email);
+            userRepository.getById(email);
             return true;
         }catch (Exception e){
             return false;
@@ -56,7 +57,7 @@ public class UserDatabaseService {
     }
 
     public void removeUserByEmail(String email) throws UserNotFoundException {
-        userRepository.removeByEmail(email);
+        userRepository.removeById(email);
     }
 
 }
