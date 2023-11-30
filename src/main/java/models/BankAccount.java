@@ -1,8 +1,12 @@
 package models;
 
+import repositories.AccountRepository;
+import repositories.impl.AccountRepositoryImpl;
 import services.OperationDatabaseService;
 
 public class BankAccount {
+
+    private AccountRepository repository = AccountRepositoryImpl.getInstance();
     private int accountId;
     private User owner;
     private int balance;
@@ -35,6 +39,7 @@ public class BankAccount {
 
     public void setBalance(int balance) {
         this.balance = balance;
+        repository.update(this.accountId, this);
     }
 
     public int getAccountId() {

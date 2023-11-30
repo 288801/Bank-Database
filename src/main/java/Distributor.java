@@ -1,9 +1,8 @@
 import exceptions.IncorrectPasswordException;
 import exceptions.UserNotFoundException;
 import models.Role;
-import services.AdminService;
-import services.DatabaseService;
-import services.UserService;
+import services.roles.AdminService;
+import services.roles.UserService;
 
 public class Distributor {
 
